@@ -4,23 +4,34 @@ import java.awt.event.*;
 import javax.swing.*;   
 
 public class Bracket {
+    String name;
     ArrayList<BracketRound> rounds = new ArrayList<BracketRound>();
-    // int numTeams = 8;
-    ArrayList<JPanel> panels = new ArrayList<JPanel>();
 
-    public Bracket(int numRds) {
-        // panels = new ArrayList<JPanel>();
-        // rounds = new ArrayList<BracketRound>();
+    public Bracket(String name, int numRds) {
+        this.name = name;
         int numGames = 1;
         for (int i = 0; i < numRds; i++) {
             rounds.add(0, new BracketRound(numGames));
             numGames *= 2;
         }
-            
-        // addRound();
-        // addRound();
-        // addRound();
-        // drawRounds();
+    }
+
+    public Bracket(String name) {
+        this.name = name;
+        int numGames = 1;
+        // for (int i = 0; i < numRds; i++) {
+        //     rounds.add(0, new BracketRound(numGames));
+        //     numGames *= 2;
+        // }
+    }
+
+    public Bracket(int numRds, String name) {
+        this.name = name;
+        int numGames = 1;
+        for (int i = 0; i < numRds; i++) {
+            rounds.add(0, new BracketRound(numGames));
+            numGames *= 2;
+        }
     }
 
     public void addRound(BracketRound round) {
@@ -29,45 +40,45 @@ public class Bracket {
         // rounds.add(new BracketRound(numGames*2));
     }
 
-    public void drawRounds() {
+    // public void drawRounds() {
         
-        for (int i = (rounds.size()); i > 0; i--) {
-            JPanel newPanel = new JPanel();
-            newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.PAGE_AXIS));
-            newPanel.setBackground(new Color(255-(i*6),235-(i*5),225-(i*4)));
+    //     for (int i = (rounds.size()); i > 0; i--) {
+    //         JPanel newPanel = new JPanel();
+    //         newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.PAGE_AXIS));
+    //         newPanel.setBackground(new Color(255-(i*6),235-(i*5),225-(i*4)));
 
-            Dimension min = new Dimension(200,0);
-            Dimension pref = new Dimension(200,0);
-            Dimension max = new Dimension(200, 0);
-            newPanel.add(new Box.Filler(min, pref, max));
+    //         Dimension min = new Dimension(200,0);
+    //         Dimension pref = new Dimension(200,0);
+    //         Dimension max = new Dimension(200, 0);
+    //         newPanel.add(new Box.Filler(min, pref, max));
             
 
-            newPanel.add(Box.createVerticalGlue());
-            BracketRound currentRound = rounds.get(i-1);
-            int nGames = rounds.get(i-1).numGames;
-            for (int j = 0; j < nGames; j++) {
-                JLabel newLabel = new JLabel("Game: " + (j+1));
-                JButton teamOne = currentRound.games.get(j).teams.get(0).assignTeam;
-                JButton teamTwo = currentRound.games.get(j).teams.get(1).assignTeam;
-                newLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-                teamOne.setAlignmentX(Component.CENTER_ALIGNMENT);
-                teamTwo.setAlignmentX(Component.CENTER_ALIGNMENT);
-                newPanel.add(newLabel);
-                newPanel.add(teamOne);
-                newPanel.add(teamTwo);
-                // newPanel.add(newButton);
-                // newPanel.add(newButtonTwo);
-                // if (j < (nGames+1)) {
-                    newPanel.add(Box.createVerticalGlue());
-                // }
-            }
-            // newPanel.add(Box.createVerticalGlue());
-            newPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+    //         newPanel.add(Box.createVerticalGlue());
+    //         BracketRound currentRound = rounds.get(i-1);
+    //         int nGames = rounds.get(i-1).numGames;
+    //         for (int j = 0; j < nGames; j++) {
+    //             JLabel newLabel = new JLabel("Game: " + (j+1));
+    //             JButton teamOne = currentRound.games.get(j).teams.get(0).assignTeam;
+    //             JButton teamTwo = currentRound.games.get(j).teams.get(1).assignTeam;
+    //             newLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+    //             teamOne.setAlignmentX(Component.CENTER_ALIGNMENT);
+    //             teamTwo.setAlignmentX(Component.CENTER_ALIGNMENT);
+    //             newPanel.add(newLabel);
+    //             newPanel.add(teamOne);
+    //             newPanel.add(teamTwo);
+    //             // newPanel.add(newButton);
+    //             // newPanel.add(newButtonTwo);
+    //             // if (j < (nGames+1)) {
+    //                 newPanel.add(Box.createVerticalGlue());
+    //             // }
+    //         }
+    //         // newPanel.add(Box.createVerticalGlue());
+    //         newPanel.add(Box.createRigidArea(new Dimension(0, 10)));
             
             
-            panels.add(newPanel);
-        }
-    }
+    //         panels.add(newPanel);
+    //     }
+    // }
 
  
 

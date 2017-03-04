@@ -9,6 +9,10 @@ public class Team {
     JButton assignTeam;
     // ArrayList<Team> teamList = new ArrayList<Team>();
 
+    // public Team() {
+    //     name = null;
+    //     assignTeam = new JButton(name);
+    // }
     public Team(String n) {
         name = n;
         assignTeam = new JButton(name);

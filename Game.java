@@ -10,8 +10,8 @@ public class Game {
     public Game() {
         totalGames++;
         gameNumber = totalGames;
-        teams.add(new Team("Team 1"));
-        teams.add(new Team("Team 2"));
+        teams.add(new Team("Team Foo"));
+        teams.add(new Team("Team Bar"));
     }
 
     public void addTeam(Team a) {
