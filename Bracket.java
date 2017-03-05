@@ -3,41 +3,75 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;   
 
-public class Bracket {
+public class Bracket extends JLabel {
     String name;
+    int tempId;
+    public static int numBrackets = 0;
     ArrayList<BracketRound> rounds = new ArrayList<BracketRound>();
+    ArrayList<Team> teams = new ArrayList<Team>();
+    int numGames = 1;
+    public static boolean saveAction = true;
 
+    public Bracket() {
+        numBrackets++;
+        tempId = numBrackets;
+        this.setIcon(new ImageIcon("lol.jpg"));
+    }
+    public Bracket(String name) {
+        this();
+        this.name = name;    
+        // rounds = new ArrayList<BracketRound>();
+    }
+    
     public Bracket(String name, int numRds) {
-        this.name = name;
-        int numGames = 1;
+        this(name);
+        
         for (int i = 0; i < numRds; i++) {
             rounds.add(0, new BracketRound(numGames));
             numGames *= 2;
         }
+        
     }
 
-    public Bracket(String name) {
-        this.name = name;
-        int numGames = 1;
+    public Bracket(int numRds, String name) {
+        this(name, numRds);
+        // this.name = name;
         // for (int i = 0; i < numRds; i++) {
         //     rounds.add(0, new BracketRound(numGames));
         //     numGames *= 2;
         // }
     }
 
-    public Bracket(int numRds, String name) {
-        this.name = name;
-        int numGames = 1;
-        for (int i = 0; i < numRds; i++) {
-            rounds.add(0, new BracketRound(numGames));
-            numGames *= 2;
+    public Bracket(Bracket b) {
+        this();
+        name = b.name;
+        // teams = b.teams;
+        for (Team team : b.teams) {
+            teams.add(team);
         }
+        rounds = new ArrayList<BracketRound>();
+        for (int i = 0; i < b.rounds.size(); i++) {
+            BracketRound newRound = new BracketRound((BracketRound) b.rounds.get(i));
+            rounds.add(newRound);   
+        }
+        // this.teams = t.teams;
     }
 
-    public void addRound(BracketRound round) {
-        rounds.add(0, round);
+    public void addTeam(Team team) {
+        teams.add(team);
+    }
+
+    public void addRound() {
+        int prevNumGames = rounds.get(0).games.size();
+        rounds.add(0, new BracketRound(prevNumGames * 2));
         // int numGames = rounds.get(rounds.size()-1).numGames;
         // rounds.add(new BracketRound(numGames*2));
+    }
+    public void addrounds(int n) {
+        for (int i = 0; i < n; i++) {
+            int prevNumGames = rounds.get(0).games.size();
+            rounds.add(0, new BracketRound(prevNumGames*2));
+        }
     }
 
     // public void drawRounds() {
@@ -93,31 +127,31 @@ public class Bracket {
         }
     }
     
-    public void declareWinner(Team a) {
-        winnerloop:
-        for (BracketRound round : rounds) {
-            for (Game game : round.games) {
-                for (Team team : game.teams) {
-                    if (team == a) {
-                        int index = rounds.indexOf(round);
-                        if ((index + 1) == rounds.size()) {
-                            System.out.println("The champion is " + team.name);
-                            break winnerloop;
-                        }
-                        int gameNumber = rounds.get(index).games.indexOf(game);
-                        int teamNumber = rounds.get(index).games.get(gameNumber).teams.indexOf(team);
-                        rounds.get(index).games.get(gameNumber).teams.set(teamNumber, new Team(team.name));
-                        try {
-                            rounds.get(index+1).games.get((int) Math.floor((double) gameNumber /2 )).addTeam(team);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        break winnerloop;
-                    }
-                }
-            }
-        }  
-    }
+    // public void declareWinner(Team a) {
+    //     winnerloop:
+    //     for (BracketRound round : rounds) {
+    //         for (Game game : round.games) {
+    //             for (Team team : game.teams) {
+    //                 if (team == a) {
+    //                     int index = rounds.indexOf(round);
+    //                     if ((index + 1) == rounds.size()) {
+    //                         System.out.println("The champion is " + team.name);
+    //                         break winnerloop;
+    //                     }
+    //                     int gameNumber = rounds.get(index).games.indexOf(game);
+    //                     int teamNumber = rounds.get(index).games.get(gameNumber).teams.indexOf(team);
+    //                     rounds.get(index).games.get(gameNumber).teams.set(teamNumber, new Team(team.name));
+    //                     try {
+    //                         rounds.get(index+1).games.get((int) Math.floor((double) gameNumber /2 )).addTeam(team);
+    //                     } catch (Exception e) {
+    //                         e.printStackTrace();
+    //                     }
+    //                     break winnerloop;
+    //                 }
+    //             }
+    //         }
+    //     }  
+    // }
 
     public void go() {
         for (BracketRound round : rounds) {
