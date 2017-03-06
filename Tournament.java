@@ -9,7 +9,10 @@ import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;   
-import javax.swing.border.*;   
+import javax.swing.border.*;
+import javax.swing.UIManager;
+
+// import com.sun.media.jfxmedia.events.NewFrameEvent;   
 
 public class Tournament extends JFrame {
     // String name;
@@ -30,6 +33,22 @@ public class Tournament extends JFrame {
     TeamButtonListener teamButtonL = new TeamButtonListener();
     // RightMouseListener rml;
     int count = 1;
+
+    public Tournament(String name, int numRds) {
+        
+        id = ++idCounter;
+        bracket = new Bracket(name, numRds);
+
+        String[] teams = {"CLG","C9","EF", "TSM", "TL", "FQ", "IMT", "DIG"};
+        for (String teamName : teams) {
+            Team team = new Team();
+            team.setName(teamName);
+            bracket.addTeam(team);
+        }
+            
+        makeAndDrawFrame();
+    }
+    
     public Color randomColor() {
         int r = (int) (Math.random() * 250);
         int g = (int) (Math.random() * 250);
@@ -40,6 +59,9 @@ public class Tournament extends JFrame {
     }
 
     public void makeAndDrawFrame() {
+        JButton editBracketButton = new JButton("Edit Bracket");
+        editBracketButton.addActionListener(new EditBracketListener());
+        footerContainer.add(editBracketButton);
         JButton addRoundButton = new JButton("Add Round");
         addRoundButton.addActionListener(new AddRoundListener());
         footerContainer.add(addRoundButton);
@@ -50,6 +72,7 @@ public class Tournament extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         headerContainer.setBackground(Color.WHITE);
         footerContainer.setBackground(Color.WHITE);
+        headerContainer.setPreferredSize(new Dimension(100, 40));
         JTextField newName = new JTextField(15);
         footerContainer.add(newName);
         getContentPane().add(headerContainer, BorderLayout.NORTH);
@@ -58,20 +81,24 @@ public class Tournament extends JFrame {
         makeAndDrawBracket();    
     
         pack();
+        setSize(600,400);
         // setResizable(false);
         setVisible(true);
 
     }
     public void setTeamBG(Team t) {
         if (t.isSet) {
+            if (t.isWinner) t.setBgColor(new Color(235,255,235));
+            if (t.isLoser) t.setBgColor(new Color(255,235,235));
             t.setText(t.getName());
-            t.setBackground(t.backgroundColor);
+            t.setBackground(t.getBgColor());
         } else {
-            t.setText("-----");
+            // t.setText("-----");
         }
     }
     ArrayList<Bracket> bracketHistory = new ArrayList<Bracket>();
     public void makeAndDrawBracket() {
+        if (bracket.saveHistory) bracketHistory.add(new Bracket(bracket));
         GridLayout gridLayout = new GridLayout(1,0);
         GridBagConstraints gbc = new GridBagConstraints();
     
@@ -108,6 +135,7 @@ public class Tournament extends JFrame {
                 teamOne.addMouseListener(new RightMouseListener(teamOne)); 
                 teamTwo.addMouseListener(new RightMouseListener(teamTwo));
                 // add buttons to the game for display in GUI
+                System.out.println(UIManager.getUI(teamOne));
 
                 GridBagConstraints tc = new GridBagConstraints(); 
                 tc.weightx = .5;
@@ -123,6 +151,7 @@ public class Tournament extends JFrame {
                 gc.weighty = 1;
                 gc.gridy = GridBagConstraints.RELATIVE;
                 gc.gridx = 0;
+                gc.insets = new Insets(2, 0, 2, 0);
                 
                 //add game to current round
                 round.add(game, gc);
@@ -150,71 +179,16 @@ public class Tournament extends JFrame {
         championPanel.add(championLabel);
         championPanel.add(champion);
         bracket.add(championPanel, champc);
-        // bracket.rounds.get(0).games.get(0).teams.get(0).setName("FooBar");
-        // System.out.println(bracket.rounds.get(0).games.get(0).teams.get(0).getName());
-
-        if (bracket.saveAction) {
-            System.out.println("Saving current bracket to history");
-            Bracket bHistory = new Bracket(bracket);
-            bracketHistory.add(bHistory);
-        }   
-        getContentPane().add(bracket, BorderLayout.CENTER);
         
+        getContentPane().add(bracket, BorderLayout.CENTER);
         revalidate();
         repaint();
         
     }
 
-    public Tournament(String name, int numRds) {
-        String[] teams = {"CLG","C9","EF", "TSM", "TL", "FQ", "IMT", "DIG"};
-        id = ++idCounter;
-        bracket = new Bracket(name, numRds);
-        for (String teamName : teams) {
-            Team team = new Team();
-            team.setName(teamName);
-            bracket.addTeam(team);
-        }
-            
-        makeAndDrawFrame();
-        
-    }
+    
 
-    class UndoButtonListener implements ActionListener {
-        // public UndoButtonListener(Bracket b) {
-        //     bracket = b;
-        // }
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("Bracket ID: " + bracket.tempId);
-            
-            getContentPane().remove(bracket);
-            headerContainer.removeAll();
-            footerContainer.removeAll();
-            getContentPane().remove(headerContainer);
-            getContentPane().remove(footerContainer);
-            int i = bracketHistory.size()-2;
-            bracket = null;
-            bracket = new Bracket(bracketHistory.get(i));
-            // for (BracketRound round : bracket.rounds) {  
-            //     int roundIndex = bracket.rounds.indexOf(round);          
-            //     round = (BracketRound) bracketHistory.get(i).rounds.get(roundIndex);
-            //     for (Game game : round.games) {
-            //         int gameIndex = round.games.indexOf(game);
-            //         game = (Game) bracketHistory.get(i).rounds.get(roundIndex).games.get(gameIndex);
-            //         for (Team team : game.teams) {
-            //             int teamIndex = game.teams.indexOf(team);
-            //             team = (Team) bracketHistory.get(i).rounds.get(roundIndex).games.get(gameIndex).teams.get(teamIndex);
-            //         }
-                   
-            //     }
-                
-            // }
-            bracket.saveAction = false;
-            resetBracketGUI();
-            makeAndDrawFrame();
-            bracketHistory.remove(i+1);
-            bracket.saveAction = true;
-        }
-    }
+    
 
 
     public void declareWinner(BracketRound round, Game game, Team team) {
@@ -226,15 +200,16 @@ public class Tournament extends JFrame {
         int newGameNumber = (int) (Math.floor(gameNumber / 2));
         int newRoundNumber = roundNumber + 1;
         Team newTeam = new Team(team);
+        newTeam.isLoser = false;
+        newTeam.isWinner = false;
 
-        game.teams.get(0).setBgColor(new Color(255,200,200));
-        game.teams.get(1).setBgColor(new Color(255,200,200));
-        team.setBgColor(new Color(200,255,200));
-        
-        
+        game.setWinner(team);
+
         if ((bracket.rounds.indexOf(round) + 1) == bracket.rounds.size()) {
+            bracket.champion = new Team(team);
             System.out.println("Champion! : " + team.getName());
-            champion.setText(team.getName());
+            // resetBracketGUI();
+            champion.setText(bracket.champion.getName());
         } else {
             bracket.rounds.get(newRoundNumber).games.get(newGameNumber).setTeam(newTeamNumber, newTeam);
         }
@@ -262,8 +237,8 @@ public class Tournament extends JFrame {
         championPanel.removeAll();
 
         makeAndDrawBracket();
-        revalidate();
-        repaint();
+        // revalidate();
+        // repaint();
     }
     
 
@@ -314,6 +289,7 @@ public class Tournament extends JFrame {
         teamChangeButton.addActionListener(changeListener);
         teamRemoveButton.addActionListener(removeListener);
         teamCancelButton.addActionListener(cancelListener);
+        headerContainer.add(Box.createRigidArea(new Dimension(0,10)));
         if (team.isSet) headerContainer.add(teamName, BorderLayout.NORTH);
         if (team.isSet) headerContainer.add(teamWinButton, BorderLayout.NORTH);
         headerContainer.add(teamEditButton, BorderLayout.NORTH);
@@ -323,7 +299,7 @@ public class Tournament extends JFrame {
         headerContainer.add(teamCancelButton, BorderLayout.NORTH);
 
         if (editId == team.id) {
-            // clearHeader();
+            clearHeader();
         } else {
             editId = team.id;
         }
@@ -331,6 +307,56 @@ public class Tournament extends JFrame {
         // frame.repaint();
         revalidate();
         repaint();
+    }
+    class EditBracketListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {    
+            for (BracketRound round : bracket.rounds) {
+                for (Game game : round.games) {
+                    for (Team team : game.teams) {
+                        team.setEnabled((team.isEnabled()) ? false : true);
+                    }
+                }
+            }
+            
+        }
+    }
+    class UndoButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            for (BracketRound round : bracket.rounds) {            
+                for (Game game : round.games) {
+                    for (Team team : game.teams) {
+                        team.removeActionListener(teamButtonL);
+                        for (MouseListener ml : team.getMouseListeners()) {
+                            if (ml instanceof RightMouseListener){
+                                team.removeMouseListener(ml);
+                            }
+                        }
+                    }
+                    game.removeAll();
+                }
+                round.removeAll();
+            }
+
+            bracket.removeAll();
+            championPanel.removeAll();            
+            getContentPane().remove(bracket);
+            int i = bracketHistory.size()-2; // gets the 2nd to last history
+            System.out.println("History: " + bracketHistory.get(i).rounds.get(0).games.get(0).teams.get(0).getName());
+            System.out.println("Current: " + bracket.rounds.get(0).games.get(0).teams.get(0).getName());
+            bracket = null;
+            bracket = new Bracket(bracketHistory.get(i));
+            System.out.println("Bracket rewrite: " + bracket.rounds.get(0).games.get(0).teams.get(0).getName());
+            bracketHistory.remove(bracketHistory.size()-1);
+
+            champion.setText("-----");
+            bracket.saveHistory = false;
+            // resetBracketGUI();
+
+            
+            makeAndDrawBracket();
+            // bracketHistory.remove(i+1);
+            bracket.saveHistory = true;
+        }
     }
 
     class RightMouseListener implements MouseListener {
@@ -340,7 +366,7 @@ public class Tournament extends JFrame {
         }
         public void mousePressed(MouseEvent e) {
             // System.out.println("Mouse Pressed! " + e.getButton());
-            if (e.getButton() == MouseEvent.BUTTON3) {
+            if ((e.getButton() == MouseEvent.BUTTON3) && team.isEnabled()) {
                 Game game = (Game) team.getParent();
                 BracketRound round = (BracketRound) game.getParent();
                 declareWinner(round, game, team);
@@ -348,20 +374,18 @@ public class Tournament extends JFrame {
                 resetBracketGUI();
             }
         }
-        // public void actionPerformed(MouseEvent e) { 
-        //     System.out.println("Action Performed! " + e.getButton() + "(action performed)");
-        // }
+   
         public void mouseExited(MouseEvent e) {
-            // System.out.println("Mouse Exited: " + e.getButton());
+
         }
         public void mouseEntered(MouseEvent e) {
-            // System.out.println("Mouse Entered: " + e.getButton());
+
         }
         public void mouseReleased(MouseEvent e) {
-            // System.out.println("Mouse Entered: " + e.getButton());
+
         }
         public void mouseClicked(MouseEvent e) {
-            // System.out.println("Mouse Clicked: " + e.getButton());
+
         }
     }
     int editId = 0;
@@ -381,10 +405,11 @@ public class Tournament extends JFrame {
             this.team = team;
         }
         public void actionPerformed(ActionEvent e) {
-           System.out.println("editing team: " + team.getName());
-           for (Team team : bracket.teams) {
-               System.out.println("Team: " + team.getName());
-           }
+        //    System.out.println("editing team: " + team.getName());
+        //    for (Team team : bracket.teams) {
+        //        System.out.println("Team: " + team.getName());
+        //    }
+        // System.out.println(team.getUI());
 
         }
     }

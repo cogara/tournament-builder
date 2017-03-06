@@ -7,16 +7,24 @@ public class Team extends JButton {
     String name = " ";
     public static int numTeams = 0;
     int id;
+    boolean isWinner = false;
+    boolean isLoser = false;
     boolean isSet = false;
     Color backgroundColor = (Color) new JButton().getBackground();
 
     public Team() {
+        setFocusPainted(false);
+        setText("-");
         // setEnabled(false);
         id = ++numTeams;
     }
     public Team(Team t) {
+        this();
         this.name = t.name;
-        this.isSet = true;
+        this.isWinner = t.isWinner;
+        this.isLoser = t.isLoser;
+        this.isSet = t.isSet;
+        setText(this.name);
         id = ++numTeams;
     }
     public String getName() {
@@ -33,9 +41,4 @@ public class Team extends JButton {
     public Color getBgColor() {
         return backgroundColor;
     }
-
-    // public void eliminate() {
-    //     // isEliminated = true;
-    // }
-
 }

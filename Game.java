@@ -32,12 +32,14 @@ public class Game extends JPanel {
         teams.set(index, a);
     }
 
-    // public void declareWinner(Team a) {
-    //     for (Team team : teams) {
-    //         team.isEliminated = true;
-    //     }
-    //     a.isEliminated = false;
-    // }
-    
+    public void setWinner(Team t) {
+        for (Team team : teams) {
+            team.isWinner = false;
+            team.isLoser = true;
+        }
+        int i = teams.indexOf(t);
+        teams.get(i).isWinner = true;
+        teams.get(i).isLoser = false;
+    }
     
 }

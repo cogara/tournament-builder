@@ -9,7 +9,7 @@ public class BracketRound extends JPanel {
     static int numRounds = 0;
     public BracketRound() {
         tempId = ++numRounds;
-        System.out.println("Total # of Rds: " + numRounds);
+        // System.out.println("Total # of Rds: " + numRounds);
     }
     public BracketRound(int numGames) {
         this();
