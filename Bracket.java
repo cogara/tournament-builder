@@ -23,13 +23,19 @@ public class Bracket extends JPanel {
         try {
             bgimage = ImageIO.read(new File("./bgimage.png"));
         } catch (Exception e) {}
-        numBrackets++;
-        tempId = numBrackets;
-        champion.setText("-----");
+        // numBrackets++;
+        // tempId = numBrackets;
+        // champion.teamName.setText("-----");
         // this.setIcon(new ImageIcon("lol.jpg"));
     }
     public Bracket(String name) {
         this();
+        // try {
+        //     bgimage = ImageIO.read(new File("./bgimage.png"));
+        // } catch (Exception e) {}
+        numBrackets++;
+        tempId = numBrackets;
+        champion.teamName.setText("-----");
         this.name = name;    
         // rounds = new ArrayList<BracketRound>();
     }
@@ -81,6 +87,9 @@ public class Bracket extends JPanel {
             rounds.add(0, new BracketRound(prevNumGames*2));
         }
     }
+
+   
+
    
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -94,5 +103,7 @@ public class Bracket extends JPanel {
             }
         } 
     }
+
+
 
 }
