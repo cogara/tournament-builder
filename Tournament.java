@@ -54,19 +54,19 @@ public class Tournament extends JFrame {
         
         
 
-        String[] teams = {"CLG","C9","EF", "TSM", "TL", "FQ", "IMT", "DIG"};
+        String[] teams = {"Twins","White Sox","Tigers", "Indians", "Mariners", "Yankees", "Astros", "Giants"};
         for (String teamName : teams) {
             Team team = new Team();
             team.setName(teamName);
             bracket.addTeam(team);
         }
-        String[] teams2 = {"Navi","NiP","CS", "Liquid", "AB", "AC", "ZD", "DE"};
+        String[] teams2 = {"Wild","Blackhawks","Avalanche", "Red Wings", "Blue Jackets", "Jets", "Rangers", "Capitols"};
         for (String teamName : teams2) {
             Team team = new Team();
             team.setName(teamName);
             b1.addTeam(team);
         }
-        String[] teams3 = {"ab","cd","ef", "gh", "ij", "kl", "mn", "op"};
+        String[] teams3 = {"Vikins","Packers","Lions", "Bears", "Patriots", "Cowboys", "Panthers", "Browns"};
         for (String teamName : teams3) {
             Team team = new Team();
             team.setName(teamName);
@@ -122,7 +122,7 @@ public class Tournament extends JFrame {
         JButton editBracketButton = new JButton("Edit Bracket");
         editBracketButton.addActionListener(new EditBracketListener());
         footerContainer.add(editBracketButton);
-        JButton addTeamButton = new JButton("Modal Button");
+        JButton addTeamButton = new JButton("Add Teams");
         addTeamButton.addActionListener(new AddTeamListener());
         footerContainer.add(addTeamButton);
         // JButton addRoundButton = new JButton("Add Round");
