@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;   
 
-public class BracketRound extends JPanel {
+public class BracketRound {
     ArrayList<Game> games = new ArrayList<Game>();
     public int tempId;
     static int numRounds = 0;

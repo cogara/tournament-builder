@@ -16,66 +16,51 @@ import javax.swing.UIManager;
 
 public class Tournament extends JFrame {
     Bracket bracket;
-    // public static int idCounter;
-    // int id;
     JPanel headerContainer = new JPanel();
     JPanel footerContainer = new JPanel();
     JPanel contentContainer = new JPanel();
     JPanel championPanel = new JPanel();
     JLabel championLabel = new JLabel("Champion:");
     JLabel champion = new JLabel(" ----- ");
-    // ArrayList<Team> teams = new ArrayList<Team>();
     ArrayList<Bracket> bracketHistory = new ArrayList<Bracket>();
     ArrayList<Bracket> savedBrackets = new ArrayList<Bracket>();
-    // TeamButtonListener teamButtonL = new TeamButtonListener();
     int count = 1;
-
-    // Bracket b1 = new Bracket("B1", 2);
-    // Bracket b2 = new Bracket("B2", 3);
-    // Bracket b3 = new Bracket("B3", 4);
 
     JButton addRoundButton = new JButton("Add Round");
     JButton undoButton = new JButton("Undo");
     AddRoundListener addRoundL = new AddRoundListener();
     UndoButtonListener undoButtonL = new UndoButtonListener();
-    
 
     public Tournament(String name, int numRds) {
-        Bracket b1 = new Bracket("B1", 2);
-        Bracket b2 = new Bracket("B2", 3);
-        // Bracket b3 = new Bracket("B3", 4);
-        // savedBrackets.add(b1);
-        // savedBrackets.add(b2);
-        
-        // id = ++idCounter;
+
         bracket = new Bracket(name, numRds);
         addRoundButton.addActionListener(addRoundL);
-        undoButton.addActionListener(undoButtonL);
+        undoButton.addActionListener(undoButtonL);        
         
-        
-
         String[] teams = {"Twins","White Sox","Tigers", "Indians", "Mariners", "Yankees", "Astros", "Giants"};
         for (String teamName : teams) {
             Team team = new Team();
             team.setName(teamName);
             bracket.addTeam(team);
         }
-        String[] teams2 = {"Wild","Blackhawks","Avalanche", "Red Wings", "Blue Jackets", "Jets", "Rangers", "Capitols"};
-        for (String teamName : teams2) {
-            Team team = new Team();
-            team.setName(teamName);
-            b1.addTeam(team);
-        }
-        String[] teams3 = {"Vikins","Packers","Lions", "Bears", "Patriots", "Cowboys", "Panthers", "Browns"};
-        for (String teamName : teams3) {
-            Team team = new Team();
-            team.setName(teamName);
-            b2.addTeam(team);
-        }
-            
         savedBrackets.add(bracket);
-        savedBrackets.add(b1);
-        savedBrackets.add(b2);
+        // Bracket b1 = new Bracket("B1", 2);
+        // String[] teams2 = {"Wild","Blackhawks","Avalanche", "Red Wings", "Blue Jackets", "Jets", "Rangers", "Capitols"};
+        // for (String teamName : teams2) {
+        //     Team team = new Team();
+        //     team.setName(teamName);
+        //     b1.addTeam(team);
+        // }
+        // savedBrackets.add(b1);
+        // Bracket b2 = new Bracket("B2", 3);
+        // String[] teams3 = {"Vikins","Packers","Lions", "Bears", "Patriots", "Cowboys", "Panthers", "Browns"};
+        // for (String teamName : teams3) {
+        //     Team team = new Team();
+        //     team.setName(teamName);
+        //     b2.addTeam(team);
+        // }
+        // savedBrackets.add(b2);
+
         makeAndDrawFrame();
         
     }
