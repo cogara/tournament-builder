@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;   
 
-public class Team {
+public class Team extends JPanel {
     String name = " ";
     public static int numTeams = 0;
     int id;

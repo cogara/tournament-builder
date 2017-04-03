@@ -7,7 +7,7 @@ import javax.imageio.*;
 import java.awt.image.BufferedImage;
 
 
-public class Bracket {
+public class Bracket extends JPanel {
     String name;
     int tempId;
     // Image bgimage = new Image("bgimage.png");

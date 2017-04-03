@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;   
 
-public class Game {
+public class Game extends JPanel {
     public static int totalGames = 0;
     int gameNumber;
     ArrayList<Team> teams = new ArrayList<Team>();
