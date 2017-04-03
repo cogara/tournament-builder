@@ -10,8 +10,8 @@ Simple application using Swing UI to create a tournament bracket.
 - In Progress
     - Add teams to bracket dynamically for selection
     - Edit existing teams
-    - Edit mode for bracket owner - change teams, edit teams, select winner, add rounds, etc.
 - To Do
+    - Edit mode for bracket owner - change teams, edit teams, select winner, add rounds, etc. (started, but currently scrapped to work on more core functionality).
     - Save and load brackets/tournaments
     - View external brackets with link - view only mode.
     - Add players to be assigned to teams
