@@ -10,9 +10,16 @@ public class Team extends JPanel {
     boolean isWinner = false;
     boolean isLoser = false;
     boolean isSet = false;
+    boolean isEditMode = false;
     Color backgroundColor = (Color) new JButton().getBackground();
     JLabel teamName = new JLabel();
 
+    // public void toggleEditMode() {
+    //     isEditMode = (isEditMode) ? false : true;
+    // }
+    // public void toggleEditMode(boolean b) {
+    //     isEditMode = b;
+    // }
     public Team() {
         setCursor(new Cursor(Cursor.HAND_CURSOR));
         // setFocusPainted(false);

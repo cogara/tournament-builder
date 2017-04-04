@@ -73,23 +73,18 @@ public class Bracket extends JPanel {
         int prevNumGames = rounds.get(0).games.size();
         rounds.add(0, new BracketRound(prevNumGames * 2));
     }
-    public void addRound(int numGames) {
-        BracketRound newRound = new BracketRound(numGames);
-        rounds.add(newRound);
-        for (int i = 0; i < numGames; i++) {
-            int index = rounds.indexOf(newRound);
-            rounds.get(index).addGame(new Game());
-        }
+
+    public void removeRound() {
+        // System.out.println(rounds.get(0).tempId);
+        rounds.remove(0);
     }
-    public void addrounds(int n) {
+
+    public void addRounds(int n) {
         for (int i = 0; i < n; i++) {
             int prevNumGames = rounds.get(0).games.size();
             rounds.add(0, new BracketRound(prevNumGames*2));
         }
     }
-
-   
-
    
     public void paintComponent(Graphics g) {
         super.paintComponent(g);

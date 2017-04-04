@@ -6,10 +6,10 @@ import javax.swing.*;
 public class BracketRound extends JPanel {
     ArrayList<Game> games = new ArrayList<Game>();
     public int tempId;
+    // public int roundNumber = 0;
     static int numRounds = 0;
     public BracketRound() {
         tempId = ++numRounds;
-        // System.out.println("Total # of Rds: " + numRounds);
     }
     public BracketRound(int numGames) {
         this();
@@ -17,6 +17,11 @@ public class BracketRound extends JPanel {
             games.add(new Game());
         }
     }
+    // public BracketRound(int numGames, int roundNum) {
+    //     this();
+    //     roundNumber = roundNum;
+    // }
+
     public BracketRound(BracketRound r) {
         this();
         games = new ArrayList<Game>();
@@ -25,6 +30,11 @@ public class BracketRound extends JPanel {
             games.add(newGame);
         }
     }
+
+    // public BracketRound(BracketRound r, int roundNum) {
+    //     this();
+    //     roundNumber = roundNum;
+    // }
     public void addGame(Game g) {
         games.add(g);
     }
