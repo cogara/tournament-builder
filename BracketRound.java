@@ -3,13 +3,10 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;   
 
-public class BracketRound extends JPanel {
+public class BracketRound {
     ArrayList<Game> games = new ArrayList<Game>();
-    public int tempId;
-    // public int roundNumber = 0;
-    static int numRounds = 0;
     public BracketRound() {
-        tempId = ++numRounds;
+
     }
     public BracketRound(int numGames) {
         this();

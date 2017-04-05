@@ -7,37 +7,25 @@ import javax.imageio.*;
 import java.awt.image.BufferedImage;
 
 
-public class Bracket extends JPanel {
+public class Bracket {
     String name;
-    int tempId;
-    // Image bgimage = new Image("bgimage.png");
-    BufferedImage bgimage;
-    public static int numBrackets = 0;
+    // BufferedImage bgimage;
     ArrayList<BracketRound> rounds = new ArrayList<BracketRound>();
     ArrayList<Team> teams = new ArrayList<Team>();
     int numGames = 1;
     Team champion = new Team();
-    public static boolean saveHistory = true;
+    // public static boolean saveHistory = true;
 
     public Bracket() {
-        try {
-            bgimage = ImageIO.read(new File("./bgimage.png"));
-        } catch (Exception e) {}
-        // numBrackets++;
-        // tempId = numBrackets;
-        // champion.teamName.setText("-----");
-        // this.setIcon(new ImageIcon("lol.jpg"));
-    }
-    public Bracket(String name) {
-        this();
         // try {
         //     bgimage = ImageIO.read(new File("./bgimage.png"));
         // } catch (Exception e) {}
-        numBrackets++;
-        tempId = numBrackets;
+    }
+
+    public Bracket(String name) {
+        this();
         champion.teamName.setText("-----");
         this.name = name;    
-        // rounds = new ArrayList<BracketRound>();
     }
     
     public Bracket(String name, int numRds) {
@@ -86,6 +74,31 @@ public class Bracket extends JPanel {
         }
     }
    
+    // public void paintComponent(Graphics g) {
+    //     super.paintComponent(g);
+    //     int iw = bgimage.getWidth(this);
+    //     int ih = bgimage.getHeight(this);
+    //     if (iw > 0 && ih > 0) {
+    //         for (int x = 0; x < getWidth(); x += iw) {
+    //             for (int y = 0; y < getHeight(); y += ih) {
+    //                 g.drawImage(bgimage, x, y, iw, ih, this);
+    //             }
+    //         }
+    //     } 
+    // }
+
+
+
+}
+
+class BracketPanel extends JPanel {
+    BufferedImage bgimage;
+    
+    public BracketPanel() {
+        try {
+            bgimage = ImageIO.read(new File("./bgimage.png"));
+        } catch (Exception e) {}
+    }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         int iw = bgimage.getWidth(this);
@@ -98,7 +111,4 @@ public class Bracket extends JPanel {
             }
         } 
     }
-
-
-
 }

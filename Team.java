@@ -3,38 +3,21 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;   
 
-public class Team extends JPanel {
+public class Team {
     String name = " ";
-    public static int numTeams = 0;
-    int id;
     boolean isWinner = false;
     boolean isLoser = false;
     boolean isSet = false;
-    boolean isEditMode = false;
     Color backgroundColor = (Color) new JButton().getBackground();
     JLabel teamName = new JLabel();
 
-    // public void toggleEditMode() {
-    //     isEditMode = (isEditMode) ? false : true;
-    // }
-    // public void toggleEditMode(boolean b) {
-    //     isEditMode = b;
-    // }
     public Team() {
-        setCursor(new Cursor(Cursor.HAND_CURSOR));
-        // setFocusPainted(false);
-        // setText("-");
-        // setBorder(BorderFactory.createLineBorder(Color.yellow));
-        // setEnabled(false);
-        id = ++numTeams;
-        // setOpaque(true);
-        // setForeground(Color.black);
-        add(teamName);
+        // setCursor(new Cursor(Cursor.HAND_CURSOR));
+        // add(teamName);
         
     }
     public Team(Team t) {
         this();
-        this.id = t.id;
         this.name = t.name;
         this.isWinner = t.isWinner;
         this.isLoser = t.isLoser;
@@ -47,10 +30,10 @@ public class Team extends JPanel {
     }
     public void setName(String name) {
         this.name = name;
-        teamName.setText(name);
+        // teamName.setText(name);
         isSet = true;
-        revalidate();
-        repaint();
+        // revalidate();
+        // repaint();
         // setEnabled(true);
     }
     public void setBgColor(Color c) {
@@ -59,10 +42,23 @@ public class Team extends JPanel {
     public Color getBgColor() {
         return backgroundColor;
     }
-    public void setEnabled(boolean enabled){
-        setForeground(Color.RED);
-        // setStyle("-fx-opacity: 1.0;");
-        // setDisabledTextColor(Color.BLACK);
-        super.setEnabled(enabled);
+}
+
+class TeamPanel extends JPanel {
+    boolean selected = false;
+    boolean isWinner = false;
+    boolean isLoser = false;
+    boolean isSet = false;
+
+    public TeamPanel() {
+
+    }
+
+    public Boolean isSelected() {
+        return selected;
+    }
+
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
     }
 }
