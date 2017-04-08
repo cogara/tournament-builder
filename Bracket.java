@@ -14,6 +14,7 @@ public class Bracket {
     ArrayList<Team> teams = new ArrayList<Team>();
     int numGames = 1;
     Team champion = new Team();
+    // String userAgent = "blah";
     // public static boolean saveHistory = true;
 
     public Bracket() {
@@ -59,6 +60,9 @@ public class Bracket {
 
     public void addRound() {
         int prevNumGames = rounds.get(0).games.size();
+        // for (BracketRound round : rounds) {
+        //     round.roundNumber++;
+        // }
         rounds.add(0, new BracketRound(prevNumGames * 2));
     }
 
@@ -72,6 +76,10 @@ public class Bracket {
             int prevNumGames = rounds.get(0).games.size();
             rounds.add(0, new BracketRound(prevNumGames*2));
         }
+    }
+
+    public String getName() {
+        return name;
     }
    
     // public void paintComponent(Graphics g) {

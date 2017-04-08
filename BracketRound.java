@@ -4,9 +4,10 @@ import java.awt.event.*;
 import javax.swing.*;   
 
 public class BracketRound {
+    int roundNumber = -1;
     ArrayList<Game> games = new ArrayList<Game>();
     public BracketRound() {
-
+        // roundNumber = -1;
     }
     public BracketRound(int numGames) {
         this();

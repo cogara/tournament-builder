@@ -4,8 +4,10 @@ import java.awt.event.*;
 import javax.swing.*;   
 
 public class Game {
+    int gameNumber = -1;
     ArrayList<Team> teams = new ArrayList<Team>();
-    Team gameWinner = null;
+    Team gameWinner = new Team();
+    Team gameLoser = new Team();
     public Game() {
         teams.add(new Team());
         teams.add(new Team());
@@ -28,14 +30,19 @@ public class Game {
     }
 
     public void setWinner(Team t) {
-        // for (Team team : teams) {
-        //     team.isWinner = false;
-        //     team.isLoser = true;
-        // }
-        // int i = teams.indexOf(t);
-        // teams.get(i).isWinner = true;
-        // teams.get(i).isLoser = false;
-        gameWinner = (Team) t;
+        for (Team team : teams) {
+            if (team == t) {
+                gameWinner = team;
+            } else {
+                gameLoser = team;
+            }
+        }
+        // System.out.println(gameLoser.getName());
+        // System.out.println(gameWinner.getName());
+    }
+    public void clearWinner() {
+        gameWinner = new Team();
+        gameLoser = new Team();
     }
     
 }
