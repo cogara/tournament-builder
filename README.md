@@ -18,3 +18,4 @@ Simple application using Swing UI to create a tournament bracket.
     - View external brackets with link - view only mode.
     - Add players to be assigned to teams
     - View Team info (players, stats)
+    - deploy as Java Web Start Application
